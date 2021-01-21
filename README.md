@@ -5,6 +5,9 @@ Jenkins is a self contained, open sourced automation server which can be used to
 
 Jenkins main function is to launch jobs. Jobs are scripts that cover managing repositories, building and testing. Jenkins pipeline is a script that is launched by Jenkins job. Each pipeline consists of build stages that follow one another, for example: download repository, build, test, etc. Each stage consists of steps that are actual commands ran on an actual device under test - which which is called: Node.
 
+## Warning
+Files in this repository consist of scripts and functions meant to be shared and used in other repositories.
+
 ## Requirements
 To run tests it is recommended to install these plugins first:
 
@@ -126,23 +129,3 @@ Jenkins jobs can be accessed from main dashboard. To select job click on the nam
 ### Running a Job
 Enter the Job view and click "Build with Parameters". Some build configuration can be made. To run job, click "Build".
 
-#### pmemkv_linux
-
-**LABEL** - Name of the node or group to run job on, for example: rhel8_2, openSUSE15_2, fedora32, ubuntu20_04, ubuntu19.10, debian10, etc. Make sure that node with this label exist and its online.
-
-**BRANCH** - Pmemkv repository branch.
-
-**TEST_TYPE** - PMEMKV test type to run: normal, building, compability.
-
-**DEVICE_TYPE** - Selects tested device type. If "NONE" - test will run on HDD.
-
-**REPO_URL** - Git repository address.
-
-**COVERAGE** - Enable or disable code coverage.
-
-**EMAIL_RECIPIENTS** - Recipients of the e-mail with job status and sent after execution.
-
-**SEND_RESULTS** - Enable or disable email reporting.
-
-#### pmemkv_linux_matrix
-This job will run multiple pmemkv_linux jobs. Instead LABEL and TEST_TYPE there is a combinations matrix. Each check will run job with specified TEST_TYPE on specified OS.

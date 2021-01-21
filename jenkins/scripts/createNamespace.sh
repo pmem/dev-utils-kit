@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # SPDX-License-Identifier: BSD-3-Clause
-# Copyright 2019-2020, Intel Corporation
+# Copyright 2021, Intel Corporation
 
 # createNamespace.sh - Remove old namespaces and create new for pmemkv tests.
 
