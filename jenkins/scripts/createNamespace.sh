@@ -17,6 +17,9 @@ CREATE_PMEM=false
 MOUNTPOINT="/mnt/pmem0"
 # The default size of namespaces.
 SIZE=100G
+# During the namespace creation, this user will gain access to files necessary to run tests.
+# This is done to allow non root users to start execution.
+USERNAME=test-user
 
 function usage()
 {
@@ -90,7 +93,7 @@ trap 'echo "ERROR: Failed to create namespaces"; remove_namespaces; exit 1' ERR 
 if $CREATE_DAX; then
 	create_devdax 4k $SIZE
 	# Setting DAX specific permission.
-	sudo chmod 666 /dev/dax*
+	sudo chown -R $USERNAME /dev/dax*
 fi
 
 # Creating mountpoint.
@@ -109,7 +112,7 @@ if $CREATE_PMEM; then
 		sudo mkfs.ext4 -F /dev/$pmem_name
 		sudo mount -o dax /dev/$pmem_name $MOUNTPOINT
 		# We mount only FSDAX namespaces.
-		sudo chmod 666 $MOUNTPOINT
+		sudo chown -R $USERNAME $MOUNTPOINT
 	fi
 
 	echo "Mount point: ${MOUNTPOINT}"
