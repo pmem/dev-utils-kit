@@ -1,0 +1,38 @@
+
+name: docker-images
+# This workflow builds docker images for all OSes. We push all images
+# into registry and they serve as a base images for other pmem-related repos.
+
+on:
+  push:
+  pull_request:
+
+env:
+  REPO:           dev-utils-kit
+  GITHUB_REPO:    pmem/dev-utils-kit
+  CONTAINER_REG:  ghcr.io/pmem/dev-utils-kit
+  # use org's Private Access Token to log in to GitHub Container Registry
+  CONTAINER_REG_USER:   ${{ secrets.GH_CR_USER }}
+  CONTAINER_REG_PASS:   ${{ secrets.GH_CR_PAT }}
+  HOST_WORKDIR:   ${{ github.workspace }}
+  WORKDIR:        docker
+  # XXX: we could perhaps use IMG_VER for "utils" package versioning (along with versioning image itself)
+  IMG_VER:        latest
+  PUSH_IMAGE:     1
+
+jobs:
+  linux:
+    name: docker-images
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        CONFIG: ["OS=Ubuntu OS_VER=20.04",
+                 "OS=Fedora OS_VER=34"]
+    steps:
+      - name: Clone the git repo
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Pull the image or rebuild and push it
+        run: cd $WORKDIR &&  ${{ matrix.CONFIG }} ./pull-or-rebuild-image.sh
