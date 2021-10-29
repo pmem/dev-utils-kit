@@ -1,7 +1,10 @@
 # dev-utils-kit
 
 ## Overview
-The content of this repository consists of scripts and functions meant to be used within other repositories.
-Currently, you can use the following functionalities:
-  -  Jenkins's shared scripts and functions
 
+This repository consists of scripts, functions and Docker images meant
+to be used in other repositories in pmem organization.
+
+Currently, you can find here:
+  - Jenkins's shared scripts and functions,
+  - Base Docker images for all pmem-related projects.
