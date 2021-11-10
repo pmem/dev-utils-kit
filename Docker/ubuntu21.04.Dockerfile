@@ -5,13 +5,13 @@
 # Dockerfile - Base image for PMDK related projects.
 
 # Pull base image
-FROM registry.fedoraproject.org/fedora:34
+FROM registry.hub.docker.com/library/ubuntu:21.04
 MAINTAINER TBD
 
 # Set required environment variables
-ENV OS fedora
-ENV OS_VER 34
-ENV PACKAGE_MANAGER rpm
+ENV OS ubuntu
+ENV OS_VER 21.04
+ENV PACKAGE_MANAGER deb
 ENV NOTTY 1
 
 # Base development packages
@@ -19,22 +19,22 @@ ARG BASE_DEPS="\
 	cmake \
 	clang \
 	gcc \
-	gcc-c++ \
+	g++ \
 	git \
 	make \
-	rpm-build \
-	rpm-build-libs \
-	rpmdevtools"
+	ca-certificates"
 
 # PMDK's dependencies (optional; libpmemobj-devel package may be used instead)
 ARG PMDK_DEPS="\
 	autoconf \
 	automake \
-	daxctl-devel \
+	libdaxctl-dev \
 	man \
-	ndctl-devel \
-	python3 \
-	which"
+	libndctl-dev \
+	devscripts \
+	build-essential \
+	debhelper \
+	python3"
 
 # pmem's Valgrind (optional; valgrind-devel may be used instead)
 ARG VALGRIND_DEPS="\
@@ -50,22 +50,25 @@ ARG DOC_DEPS="\
 # NOTE: glibc is installed as a separate command; see below
 ARG TESTS_DEPS="\
 	gdb \
-	libunwind-devel"
+	libunwind-dev"
 
 # Misc for our builds/CI (optional)
 ARG MISC_DEPS="\
 	hub \
-	perl-Text-Diff \
+	libtext-diff-perl \
 	pkgconf \
-	sudo"
+	sudo \
+	whois"
 
 # Coverity
 ENV COVERITY_DEPS "\
 	wget"
 
+ENV DEBIAN_FRONTEND noninteractive
+
 # Update packages and install basic tools
-RUN dnf update -y \
- && dnf install -y \
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends \
 	${BASE_DEPS} \
 	${PMDK_DEPS} \
 	${VALGRIND_DEPS} \
@@ -73,8 +76,8 @@ RUN dnf update -y \
 	${TESTS_DEPS} \
 	${MISC_DEPS} \
 	${COVERITY_DEPS} \
- && dnf debuginfo-install -y glibc \
- && dnf clean all
+ && rm -rf /var/lib/apt/lists/* \
+ && apt-get clean all
 
 # Install valgrind
 COPY install-valgrind.sh install-valgrind.sh
@@ -83,7 +86,5 @@ RUN ./install-valgrind.sh
 # Add user
 ENV USER user
 ENV USERPASS pass
-RUN useradd -m $USER \
- && echo "$USER:$USERPASS" | chpasswd \
- && gpasswd wheel -a $USER
+RUN useradd -m $USER -g sudo -p `mkpasswd $USERPASS`
 USER $USER
