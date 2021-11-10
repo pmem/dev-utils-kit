@@ -5,12 +5,12 @@
 # Dockerfile - Base image for PMDK related projects.
 
 # Pull base image
-FROM registry.fedoraproject.org/fedora:34
+FROM registry.fedoraproject.org/fedora:33
 MAINTAINER TBD
 
 # Set required environment variables
 ENV OS fedora
-ENV OS_VER 34
+ENV OS_VER 33
 ENV PACKAGE_MANAGER rpm
 ENV NOTTY 1
 
