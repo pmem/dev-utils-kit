@@ -13,7 +13,7 @@
 # push_image function below) image will be pushed to the ${CONTAINER_REG}.
 #
 # The script rebuilds the Docker image if:
-# 1. the Dockerfile for the current OS version (Dockerfile.${OS}-${OS_VER})
+# 1. the Dockerfile for the current OS version (${OS}-${OS_VER}.Dockerfile)
 #    or any .sh script in the Dockerfiles directory were modified and committed, or
 # 2. "rebuild" param was passed as a first argument to this script.
 #
@@ -44,7 +44,7 @@ if [[ -z "${CONTAINER_REG}" ]]; then
 fi
 
 function build_image() {
-	echo "Building the Docker image for the Dockerfile.${OS}-${OS_VER}"
+	echo "Building the Docker image for the ${OS}-${OS_VER}.Dockerfile"
 	pushd ${IMAGES_DIR_NAME}
 	./build-image.sh
 	popd
@@ -108,7 +108,7 @@ for file in ${files}; do echo ${file}; done
 # Check if committed file modifications require the Docker image to be rebuilt
 for file in ${files}; do
 	# Check if modified files are relevant to the current build
-	if [[ ${file} =~ ^(${BASE_DIR})\/Dockerfile\.(${OS})-(${OS_VER})$ ]] \
+	if [[ ${file} =~ ^(${BASE_DIR})\/(${OS})-(${OS_VER})\.Dockerfile$ ]] \
 		|| [[ ${file} =~ ^(${BASE_DIR})\/.*\.sh$ ]]
 	then
 		build_image

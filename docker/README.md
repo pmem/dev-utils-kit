@@ -13,7 +13,7 @@ In case of any problem, patches and github issues are welcome.
 # How to build Docker image
 
 ```sh
-docker build --build-arg https_proxy=http://proxy.com:port --build-arg http_proxy=http://proxy.com:port -t pmem:fedora-34 -f ./Dockerfile.fedora-34 .
+docker build --build-arg https_proxy=http://proxy.com:port --build-arg http_proxy=http://proxy.com:port -t pmem:fedora-34 -f ./fedora-34.Dockerfile .
 ```
 
 # How to use Docker image
