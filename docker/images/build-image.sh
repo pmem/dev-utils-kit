@@ -4,8 +4,8 @@
 #
 # build-image.sh - prepares a Docker image with <OS>-based environment for
 #		testing (or dev) purpose, tagged with ${CONTAINER_REG}:${OS}-${OS_VER}-${IMG_VER},
-#		according to the Dockerfile.${OS}-${OS_VER} file located in the same directory.
-#		IMG_VER is a version of docker image (it usually relates to project's release tag)
+#		according to the ${OS}-${OS_VER}.Dockerfile file located in the same directory.
+#		IMG_VER is a version of Docker image (it usually relates to project's release tag)
 #		and it defaults to "devel".
 #
 
@@ -25,9 +25,9 @@ if [[ -z "${CONTAINER_REG}" ]]; then
 	exit 1
 fi
 
-echo "Check if the file Dockerfile.${OS}-${OS_VER} exists"
-if [[ ! -f "Dockerfile.${OS}-${OS_VER}" ]]; then
-	echo "Error: Dockerfile.${OS}-${OS_VER} does not exist."
+echo "Check if the file ${OS}-${OS_VER}.Dockerfile exists"
+if [[ ! -f "${OS}-${OS_VER}.Dockerfile" ]]; then
+	echo "Error: ${OS}-${OS_VER}.Dockerfile does not exist."
 	exit 1
 fi
 
@@ -35,4 +35,4 @@ echo "Build a Docker image tagged with: ${CONTAINER_REG}:${TAG}"
 docker build -t ${CONTAINER_REG}:${TAG} \
 	--build-arg http_proxy=$http_proxy \
 	--build-arg https_proxy=$https_proxy \
-	-f Dockerfile.${OS}-${OS_VER} .
+	-f ${OS}-${OS_VER}.Dockerfile .
