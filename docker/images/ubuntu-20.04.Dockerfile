@@ -82,6 +82,10 @@ RUN apt-get update \
 COPY install-valgrind.sh install-valgrind.sh
 RUN ./install-valgrind.sh
 
+# Copy common installation scripts into image - for further use
+COPY install-pmdk.sh /opt/install-pmdk.sh
+COPY install-libpmemobj-cpp.sh /opt/install-libpmemobj-cpp.sh
+
 # Add user
 ENV USER user
 ENV USERPASS pass
