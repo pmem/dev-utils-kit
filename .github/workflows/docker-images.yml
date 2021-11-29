@@ -25,6 +25,7 @@ jobs:
     name: docker-images
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         CONFIG: ["OS=ubuntu OS_VER=20.04",
                  "OS=ubuntu OS_VER=21.04",
