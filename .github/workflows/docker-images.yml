@@ -26,9 +26,12 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        # XXX: add more images
         CONFIG: ["OS=ubuntu OS_VER=20.04",
-                 "OS=fedora OS_VER=34"]
+                 "OS=ubuntu OS_VER=21.04",
+                 "OS=ubuntu OS_VER=21.10",
+                 "OS=fedora OS_VER=33",
+                 "OS=fedora OS_VER=34",
+                 "OS=fedora OS_VER=35"]
     steps:
       - name: Clone the git repo
         uses: actions/checkout@v2
