@@ -30,6 +30,7 @@ ARG PMDK_DEPS="\
 	libdaxctl-dev \
 	libndctl-dev \
 	man \
+	pandoc \
 	python3"
 
 # pmem's Valgrind (optional; valgrind-devel may be used instead)

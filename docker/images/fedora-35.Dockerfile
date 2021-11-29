@@ -29,6 +29,7 @@ ARG PMDK_DEPS="\
 	daxctl-devel \
 	man \
 	ndctl-devel \
+	pandoc \
 	python3 \
 	rpm-build \
 	rpm-build-libs \
