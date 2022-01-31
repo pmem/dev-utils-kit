@@ -1,37 +1,40 @@
 # SPDX-License-Identifier: BSD-3-Clause
-# Copyright 2016-2021, Intel Corporation
+# Copyright 2016-2022, Intel Corporation
 
 #
 # Dockerfile - Base image for PMDK related projects.
 
 # Pull base image
-FROM registry.hub.docker.com/library/ubuntu:21.10
+FROM registry.fedoraproject.org/fedora:35
 MAINTAINER TBD
 
 # Set required environment variables
-ENV OS ubuntu
-ENV OS_VER 21.10
-ENV PACKAGE_MANAGER deb
+ENV OS fedora
+ENV OS_VER 35
+ENV PACKAGE_MANAGER rpm
 ENV NOTTY 1
 
 # Base development packages
 ARG BASE_DEPS="\
-	build-essential \
-	ca-certificates \
 	cmake \
-	git"
+	gcc \
+	gcc-c++ \
+	git \
+	make"
 
 # PMDK's dependencies (optional; libpmemobj-devel package may be used instead)
 ARG PMDK_DEPS="\
 	autoconf \
 	automake \
-	debhelper \
-	devscripts \
-	libdaxctl-dev \
-	libndctl-dev \
+	daxctl-devel \
 	man \
+	ndctl-devel \
 	pandoc \
-	python3"
+	python3 \
+	rpm-build \
+	rpm-build-libs \
+	rpmdevtools \
+	which"
 
 # pmem's Valgrind (optional; valgrind-devel may be used instead)
 ARG VALGRIND_DEPS="\
@@ -41,33 +44,29 @@ ARG VALGRIND_DEPS="\
 # Documentation (optional)
 ARG DOC_DEPS="\
 	doxygen \
-	pandoc"
+	pandoc "
 
 # Tests (optional)
 # NOTE: glibc is installed as a separate command; see below
 ARG TESTS_DEPS="\
 	gdb \
-	libunwind-dev"
+	libunwind-devel"
 
 # Misc for our builds/CI (optional)
 ARG MISC_DEPS="\
 	clang \
-	libtext-diff-perl \
+	hub \
+	perl-Text-Diff \
 	pkgconf \
-	sudo \
-	whois"
+	sudo"
 
 # Coverity
 ENV COVERITY_DEPS "\
-	curl \
-	ruby \
 	wget"
 
-ENV DEBIAN_FRONTEND noninteractive
-
 # Update packages and install basic tools
-RUN apt-get update \
- && apt-get install -y --no-install-recommends \
+RUN dnf update -y \
+ && dnf install -y \
 	${BASE_DEPS} \
 	${PMDK_DEPS} \
 	${VALGRIND_DEPS} \
@@ -75,8 +74,8 @@ RUN apt-get update \
 	${TESTS_DEPS} \
 	${MISC_DEPS} \
 	${COVERITY_DEPS} \
- && rm -rf /var/lib/apt/lists/* \
- && apt-get clean all
+ && dnf debuginfo-install -y glibc \
+ && dnf clean all
 
 # Install valgrind
 COPY install-valgrind.sh install-valgrind.sh
@@ -89,5 +88,7 @@ COPY install-libpmemobj-cpp.sh /opt/install-libpmemobj-cpp.sh
 # Add user
 ENV USER user
 ENV USERPASS pass
-RUN useradd -m $USER -g sudo -p `mkpasswd $USERPASS`
+RUN useradd -m $USER \
+ && echo "$USER:$USERPASS" | chpasswd \
+ && gpasswd wheel -a $USER
 USER $USER

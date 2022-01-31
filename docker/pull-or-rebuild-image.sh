@@ -28,8 +28,7 @@ source $(dirname ${0})/set-ci-vars.sh
 IMG_VER=${IMG_VER:-latest}
 TAG="${OS}-${OS_VER}-${IMG_VER}"
 IMAGES_DIR_NAME=images
-BASE_DIR=$(dirname ${0})/${IMAGES_DIR_NAME}
-echo ${BASE_DIR}
+BASE_DIR=docker/${IMAGES_DIR_NAME}
 
 if [[ -z "${OS}" || -z "${OS_VER}" ]]; then
 	echo "ERROR: The variables OS and OS_VER have to be set properly " \
