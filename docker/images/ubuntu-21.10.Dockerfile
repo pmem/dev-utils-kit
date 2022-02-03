@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: BSD-3-Clause
-# Copyright 2016-2021, Intel Corporation
+# Copyright 2016-2022, Intel Corporation
 
 #
 # Dockerfile - Base image for PMDK related projects.
@@ -21,7 +21,7 @@ ARG BASE_DEPS="\
 	cmake \
 	git"
 
-# PMDK's dependencies (optional; libpmemobj-devel package may be used instead)
+# PMDK's dependencies (optional; libpmem*-dev packages may be used instead)
 ARG PMDK_DEPS="\
 	autoconf \
 	automake \
@@ -33,7 +33,7 @@ ARG PMDK_DEPS="\
 	pandoc \
 	python3"
 
-# pmem's Valgrind (optional; valgrind-devel may be used instead)
+# pmem's Valgrind (optional; valgrind may be used instead)
 ARG VALGRIND_DEPS="\
 	autoconf \
 	automake"
@@ -44,9 +44,9 @@ ARG DOC_DEPS="\
 	pandoc"
 
 # Tests (optional)
-# NOTE: glibc is installed as a separate command; see below
 ARG TESTS_DEPS="\
 	gdb \
+	libc6-dbg \
 	libunwind-dev"
 
 # Misc for our builds/CI (optional)
@@ -56,12 +56,6 @@ ARG MISC_DEPS="\
 	pkgconf \
 	sudo \
 	whois"
-
-# Coverity
-ENV COVERITY_DEPS "\
-	curl \
-	ruby \
-	wget"
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -74,7 +68,6 @@ RUN apt-get update \
 	${DOC_DEPS} \
 	${TESTS_DEPS} \
 	${MISC_DEPS} \
-	${COVERITY_DEPS} \
  && rm -rf /var/lib/apt/lists/* \
  && apt-get clean all
 

@@ -22,7 +22,7 @@ ARG BASE_DEPS="\
 	git \
 	make"
 
-# PMDK's dependencies (optional; libpmemobj-devel package may be used instead)
+# PMDK's dependencies (optional; libpmem*-devel packages may be used instead)
 ARG PMDK_DEPS="\
 	autoconf \
 	automake \
@@ -60,10 +60,6 @@ ARG MISC_DEPS="\
 	pkgconf \
 	sudo"
 
-# Coverity
-ENV COVERITY_DEPS "\
-	wget"
-
 # Update packages and install basic tools
 RUN dnf update -y \
  && dnf install -y \
@@ -73,7 +69,6 @@ RUN dnf update -y \
 	${DOC_DEPS} \
 	${TESTS_DEPS} \
 	${MISC_DEPS} \
-	${COVERITY_DEPS} \
  && dnf debuginfo-install -y glibc \
  && dnf clean all
 
