@@ -33,6 +33,11 @@ ARG PMDK_DEPS="\
 	pandoc \
 	python3"
 
+# libpmemobj-cpp's dependencies (optional; libpmemobj-cpp-dev package may be used instead)
+ARG LIBPMEMOBJ_CPP_DEPS="\
+	libatomic1 \
+	libtbb-dev"
+
 # pmem's Valgrind (optional; valgrind may be used instead)
 ARG VALGRIND_DEPS="\
 	autoconf \

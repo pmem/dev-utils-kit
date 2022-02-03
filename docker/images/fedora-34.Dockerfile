@@ -36,6 +36,11 @@ ARG PMDK_DEPS="\
 	rpmdevtools \
 	which"
 
+# libpmemobj-cpp's dependencies (optional; libpmemobj++-devel package may be used instead)
+ARG LIBPMEMOBJ_CPP_DEPS="\
+	libatomic \
+	tbb-devel"
+
 # pmem's Valgrind (optional; valgrind-devel may be used instead)
 ARG VALGRIND_DEPS="\
 	autoconf \
