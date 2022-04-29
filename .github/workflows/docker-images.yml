@@ -30,6 +30,7 @@ jobs:
         CONFIG: ["OS=ubuntu OS_VER=20.04",
                  "OS=ubuntu OS_VER=21.04",
                  "OS=ubuntu OS_VER=21.10",
+                 "OS=ubuntu OS_VER=22.04",
                  "OS=fedora OS_VER=33",
                  "OS=fedora OS_VER=34",
                  "OS=fedora OS_VER=35"]
