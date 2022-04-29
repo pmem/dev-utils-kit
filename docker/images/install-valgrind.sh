@@ -17,8 +17,8 @@ build_dir=$(mktemp -d -t valgrind-XXX)
 git clone https://github.com/pmem/valgrind.git ${build_dir}
 pushd ${build_dir}
 
-# pmem-3.18: memcheck: fix test addressable err exp; 21.01.2022
-git checkout 06f15d69237501852dd29883940e18da4179830a
+# pmem-3.19: Merge pull request #88 from lukaszstolarczuk/pmem-3.19; 29.04.2022
+git checkout 541e1c3d22b34769ad29fa75ab29cce2a65bfa91
 
 ./autogen.sh
 echo "### Valgrind autogen complete ###"
