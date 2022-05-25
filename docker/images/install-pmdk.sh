@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # SPDX-License-Identifier: BSD-3-Clause
-# Copyright 2018-2021, Intel Corporation
+# Copyright 2018-2022, Intel Corporation
 
 #
 # install-pmdk.sh [prefix] [just_install]
@@ -25,8 +25,8 @@ JUST_INSTALL=${2:-1} # if == 0: create extra packages in '${PREFIX}-pkg' dir
 ## Environment variables:
 PACKAGE_TYPE=${PACKAGE_MANAGER,,} # make it lowercase
 [ "${PACKAGE_TYPE}" == "deb" ] && PACKAGE_TYPE="dpkg" # XXX: PMDK uses different alias
-# common: 1.11.1 release, 24.09.2021
-CHECKOUT=${PMDK_VERSION:-5b21904a257eff47f2e87fcbf2de46111f03ddd8}
+# common: 1.12.0 release, 24.05.2022
+CHECKOUT=${PMDK_VERSION:-73d8f958e855904dc0776a7d77d0f0d3698a65b1}
 
 echo "Installation prefix: '${PREFIX}'"
 echo "Bool flag - just_install: '${JUST_INSTALL}'"
