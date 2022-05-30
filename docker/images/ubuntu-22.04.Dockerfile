@@ -62,6 +62,12 @@ ARG MISC_DEPS="\
 	sudo \
 	whois"
 
+# Coverity
+ENV COVERITY_DEPS "\
+	curl \
+	ruby \
+	wget"
+
 ENV DEBIAN_FRONTEND noninteractive
 
 # Update packages and install basic tools
@@ -73,6 +79,7 @@ RUN apt-get update \
 	${DOC_DEPS} \
 	${TESTS_DEPS} \
 	${MISC_DEPS} \
+	${COVERITY_DEPS} \
  && rm -rf /var/lib/apt/lists/* \
  && apt-get clean all
 
