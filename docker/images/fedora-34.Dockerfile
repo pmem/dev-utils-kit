@@ -20,6 +20,9 @@ ARG BASE_DEPS="\
 	gcc \
 	gcc-c++ \
 	git \
+        libasan \
+        libtsan \
+        libubsan \
 	make"
 
 # PMDK's dependencies (optional; libpmem*-devel packages may be used instead)
