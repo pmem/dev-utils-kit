@@ -61,6 +61,9 @@ ARG TESTS_DEPS="\
 ARG MISC_DEPS="\
 	clang \
 	hub \
+	libasan \
+	libtsan \
+	libubsan \
 	perl-Text-Diff \
 	pkgconf \
 	sudo"
