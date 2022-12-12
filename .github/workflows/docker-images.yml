@@ -3,9 +3,7 @@ name: docker-images
 # This workflow builds docker images for all OSes. We push all images
 # into registry and they serve as a base images for other pmem-related repos.
 
-on:
-  push:
-  pull_request:
+on: [push, pull_request, workflow_dispatch]
 
 env:
   REPO:           dev-utils-kit
@@ -28,8 +26,6 @@ jobs:
       fail-fast: false
       matrix:
         CONFIG: ["OS=ubuntu OS_VER=20.04",
-                 "OS=ubuntu OS_VER=21.04",
-                 "OS=ubuntu OS_VER=21.10",
                  "OS=ubuntu OS_VER=22.04",
                  "OS=fedora OS_VER=33",
                  "OS=fedora OS_VER=34",
