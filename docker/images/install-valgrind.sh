@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # SPDX-License-Identifier: BSD-3-Clause
-# Copyright 2016-2022, Intel Corporation
+# Copyright 2016-2023, Intel Corporation
 
 #
 # install-valgrind.sh - installs valgrind with pmemcheck
@@ -17,8 +17,8 @@ build_dir=$(mktemp -d -t valgrind-XXX)
 git clone https://github.com/pmem/valgrind.git ${build_dir}
 pushd ${build_dir}
 
-# pmem-3.19: Merge pull request #88 from lukaszstolarczuk/pmem-3.19; 29.04.2022
-git checkout 541e1c3d22b34769ad29fa75ab29cce2a65bfa91
+# pmem-3.20: "-> 3.20.0 final"; 03.01.2023
+git checkout b21a0ab76d2fbc4f26d2b7c7e20df63d63f0a31b
 
 ./autogen.sh
 echo "### Valgrind autogen complete ###"
